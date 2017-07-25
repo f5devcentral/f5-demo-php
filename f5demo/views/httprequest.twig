@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Simple Web Page for Viewing HTTP Requests</title>
+  </head>
+  <body>
+	  <h1>Simple HTTP Request Page</h1>
+
+Virtual server address: {{http_host}}<br/>
+Pool member address/port: {{server_addr}}:{{server_port}}<br/>
+Client IP address/port: {% if xff %}{{xff}}{% else %}{{remote_addr}}{% endif %}:{{remote_port}}<br/>
+
+<p>Use this page to view a single HTTP request going through the BIG-IP virtual server</p>
+</body>
+</html>

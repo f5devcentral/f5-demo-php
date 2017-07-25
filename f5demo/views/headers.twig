@@ -1,0 +1,64 @@
+{% extends 'base.twig' %}
+{% block main %}
+<div class="container marketing">
+  <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron f5main">
+	    <h1>Headers <small>{{node}}</small></h1>
+    </div>
+    <div class="row">
+		    <h3>View Request and Response Headers</h3>
+		    Virtual server address: {{http_host}}<br/>
+Pool member address/port: {{server_addr}}:{{server_port}}<br/>
+Client IP address/port: {% if xff %}{{xff}}{% else %}{{remote_addr}}{% endif %}:{{remote_port}}<br/>
+
+	    </div>
+	    <div class="row">	    
+	    <div class="col-md-6">
+	    <h3>Client Headers</h3>
+		    <p>Request Headers Received at the Server</p>
+		    	       <table class="table">
+			       
+		    {% for key,value in headers %}
+			       <tr><td><b>{{key}}</b></td><td>{{value[0]}}</td></tr>
+		    {% endfor %}
+		    </table>
+	    </div>
+	    <div class="col-md-6">
+	    	 <h3>Server Headers</h3>
+		    <p>Response Headers delivered to the Client</p>
+		    <span id='responseheaders'></span>
+			    <script>
+   function loadInfo() {
+			    var http;
+			    if(window.ActiveXObject){
+				    http = new ActiveXObject("Microsoft.XMLHTTP");
+			    }else if(window.XMLHttpRequest){
+				    http = new XMLHttpRequest();
+			    }
+			    // display headers of current document:
+				    http.open('HEAD', location.href, false);
+			    http.send();
+			    
+			    var hstring = '<table class="table">';
+			    var headerarray = http.getAllResponseHeaders().split("\n");
+			    for(i = 0; i < headerarray.length; i++){
+			    	  var parts = headerarray[i].split(":");
+				  var val = parts[1];
+				    if(parts.length > 2) {
+				      	    for(j=2;j<parts.length;j++) {
+						    val = val + ':' +  parts[j];
+					    }
+				    }
+				    hstring = hstring+'<tr><td><b>' + parts[0] + '</b></td><td>'+val+'</td></tr>';
+			    }
+			    hstring = hstring+'</table>';
+			    var rhdiv = document.getElementById('responseheaders');
+			    rhdiv.innerHTML = hstring;
+			    }
+			    loadInfo();
+			    </script>
+		    </div>
+	    </div>
+    </div>
+</div>
+{% endblock %}

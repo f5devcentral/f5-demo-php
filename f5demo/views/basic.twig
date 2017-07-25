@@ -1,0 +1,31 @@
+{% extends 'base.twig' %}
+{% block main %}
+<div class="container marketing">
+  <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron f5main">
+	    <h1>Basic Auth <small>Welcome {{user.username}}</small></h1>
+	    <p>This page is authenticated via BASIC authentication. {% if is_granted('IS_AUTHENTICATED_FULLY') %} Authenticated {% endif %}</p>
+
+    </div>
+
+<div class="row">
+<div class="col-md-6">
+<h2>Request</h2>
+Virtual server address: {{http_host}}<br/>
+Pool member address/port: {{server_addr}}:{{server_port}}<br/>
+Client IP address/port: {% if xff %}{{xff}}{% else %}{{remote_addr}}{% endif %}:{{remote_port}}<br/>
+</div>
+<div class="col-md-6">
+<h2>Details</h2>
+<p>This page is authenticated via BASIC authentication.  Your BASIC Authorization header looks like:
+<p>
+<div class="well">
+{{authorization}}
+</div>
+</p>
+<p>
+Don't BASE64 decode this if you don't want to see your password!
+</p>
+</div>
+</div>
+{% endblock %}

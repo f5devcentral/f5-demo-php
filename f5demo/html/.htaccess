@@ -1,0 +1,14 @@
+header add X-COLOR %{F5DEMO_COLOR}e
+Options -MultiViews +FollowSymLinks
+RewriteEngine On
+
+# for fastcgi
+RewriteCond %{HTTP:Authorization} ^(.+)
+RewriteRule ^(.*)$ index.php [E=HTTP_AUTHORIZATION:%1,PT]
+# for silex
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+PassEnv F5DEMO_NODENAME
+PassEnv F5DEMO_COLOR
+PassEnv HOSTNAME
+PassEnv F5DEMO_SHORT_NODENAME
